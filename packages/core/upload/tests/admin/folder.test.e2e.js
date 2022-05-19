@@ -220,13 +220,7 @@ describe('Folder', () => {
         url: '/upload/folders',
       });
 
-      expect(res.body.pagination).toMatchObject({
-        page: 1,
-        pageCount: 1,
-        pageSize: 10,
-        total: 2,
-      });
-      expect(res.body.results).toEqual(
+      expect(res.body.data).toEqual(
         expect.arrayContaining([
           {
             ...data.folders[0],
@@ -400,20 +394,20 @@ describe('Folder', () => {
         },
       });
 
-      expect(resFolders.body.results[0]).toMatchObject({ path: folder0.path, parent: null });
-      expect(resFolders.body.results[1]).toMatchObject({
+      expect(resFolders.body.data[0]).toMatchObject({ path: folder0.path, parent: null });
+      expect(resFolders.body.data[1]).toMatchObject({
         path: `${folder01.path}/${folder00.uid}`,
         parent: { id: folder01.id },
       });
-      expect(resFolders.body.results[2]).toMatchObject({
+      expect(resFolders.body.data[2]).toMatchObject({
         path: folder01.path,
         parent: { id: folder0.id },
       });
-      expect(resFolders.body.results[3]).toMatchObject({
+      expect(resFolders.body.data[3]).toMatchObject({
         path: folder02.path,
         parent: { id: folder0.id },
       });
-      expect(resFolders.body.results[4]).toMatchObject({
+      expect(resFolders.body.data[4]).toMatchObject({
         path: `${folder01.path}/${folder00.uid}/${folder000.uid}`,
         parent: { id: folder00.id },
       });
@@ -432,7 +426,7 @@ describe('Folder', () => {
       });
       expect(resFiles.body.results[1]).toMatchObject({ folderPath: file02.folderPath });
 
-      data.folders.push(...resFolders.body.results);
+      data.folders.push(...resFolders.body.data);
     });
 
     test('move a folder to root level', async () => {
@@ -468,16 +462,16 @@ describe('Folder', () => {
         },
       });
 
-      expect(resFolders.body.results[0]).toMatchObject({ path: folder0.path, parent: null });
-      expect(resFolders.body.results[1]).toMatchObject({
+      expect(resFolders.body.data[0]).toMatchObject({ path: folder0.path, parent: null });
+      expect(resFolders.body.data[1]).toMatchObject({
         path: `/${folder00.uid}`,
         parent: null,
       });
-      expect(resFolders.body.results[2]).toMatchObject({
+      expect(resFolders.body.data[2]).toMatchObject({
         path: folder02.path,
         parent: { id: folder0.id },
       });
-      expect(resFolders.body.results[3]).toMatchObject({
+      expect(resFolders.body.data[3]).toMatchObject({
         path: `/${folder00.uid}/${folder000.uid}`,
         parent: { id: folder00.id },
       });
@@ -496,7 +490,7 @@ describe('Folder', () => {
       });
       expect(resFiles.body.results[1]).toMatchObject({ folderPath: file02.folderPath });
 
-      data.folders.push(...resFolders.body.results);
+      data.folders.push(...resFolders.body.data);
     });
   });
 });
