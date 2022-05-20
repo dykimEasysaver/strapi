@@ -1,6 +1,6 @@
 'use strict';
 
-const http = require('http');
+const https = require('https');
 
 const createHTTPServer = (strapi, koaApp) => {
   const connections = new Set();
@@ -15,7 +15,15 @@ const createHTTPServer = (strapi, koaApp) => {
     return handler(req, res);
   };
 
-  const server = http.createServer(listener);
+  const options = {
+    // Local certificates, if you don;t have them generate from mkcert or letsEncrypt
+     key: fs.readFileSync("server.wegomedia.net.key"),
+     cert: fs.readFileSync("server.wegomedia.net.crt")
+   };
+ 
+  const server =https.createServer(options, listener);
+   
+  //const server = https.createServer(listener);
 
   server.on('connection', connection => {
     connections.add(connection);
